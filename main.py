@@ -31,6 +31,3 @@ def set_submode(new_submode: int = Query(ge=1, le=3, default=1)):
     global data
     data.submode = new_submode
     return data
-
-
-uvicorn.run(app)
