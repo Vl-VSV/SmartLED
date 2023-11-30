@@ -6,7 +6,6 @@ router = APIRouter()
 
 
 # Control Functions
-
 def get_mode_name():
     if data.mode == 1:
         if data.submode == 1:

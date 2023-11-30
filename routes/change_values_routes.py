@@ -1,6 +1,4 @@
 from fastapi import APIRouter, HTTPException
-from pydantic import Field
-
 from routes.utitlity_functions import change_brightness, change_temperature, change_rainbow_step, change_speed, \
     change_animation_smooth, change_saturation
 
@@ -80,7 +78,7 @@ def decrease_value(value: str):
     elif value == "saturation":
         return change_saturation("-")
     else:
-        raise HTTPException(code=400, detail="Я пока этого не умею")
+        raise HTTPException(status_code=400, detail="Я пока этого не умею")
 
 
 @router.get('/setMax/{value}')
@@ -118,7 +116,7 @@ def set_value_max(value: str):
     elif value == "saturation":
         return change_saturation("max")
     else:
-        raise HTTPException(code=400, detail="Я пока этого не умею")
+        raise HTTPException(status_code=400, detail="Я пока этого не умею")
 
 
 @router.get('/setMin/{value}')
@@ -156,4 +154,4 @@ def set_value_min(value: str):
     elif value == "saturation":
         return change_saturation("min")
     else:
-        raise HTTPException(code=400, detail="Я пока этого не умею")
+        raise HTTPException(status_code=400, detail="Я пока этого не умею")

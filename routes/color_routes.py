@@ -3,6 +3,18 @@ from data_model import data
 
 router = APIRouter()
 
+# Colors
+colors = {
+    'red': 0,
+    'orange': 22,
+    'yellow': 43,
+    'green': 85,
+    'cyan': 128,
+    'blue': 170,
+    'violet': 192,
+    'pink': 213,
+}
+
 
 @router.get('/set')
 def set_color(color: str):
@@ -23,7 +35,6 @@ def set_color(color: str):
     **Raises**:
     - HTTPException: 400 Bad Request if the current mode or submode is not suitable for adjusting speed.
     """
-    colors = {'red': 0, 'green': 80}
 
     if color not in colors.keys():
         raise HTTPException(status_code=400, detail="Неизветный цвет")
