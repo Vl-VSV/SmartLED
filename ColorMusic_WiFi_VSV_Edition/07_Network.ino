@@ -75,24 +75,38 @@ void update_settings() {
   byte mode = led_control_data.mode;
   byte submode = led_control_data.submode;
 
-  if (mode == 1 && submode == 4) {
-    FastLED.setBrightness(led_control_data.a_bright);
-    return;
-  }
-
-  if (mode == 1 || (mode == 2 && submode >= 2) || mode == 3) {
-    led_control_data.EFFECT_DELAY = led_control_data.a_speed;
-
-    if (mode == 1 || mode == 2) {
-      if (mode == 2 && submode >= 4)
-        led_control_data.HUE_EFFECT = RGBtoHue(led_control_data.a_red, led_control_data.a_green, led_control_data.a_blue);
-      else
-        led_control_data.LIGHT_SAT = led_control_data.a_bright;
-    } 
-    else if (mode == 3) {
+  switch (mode) {
+    case 1:
+      switch (submode) {
+        case 1: FastLED.setBrightness(led_control_data.a_bright); break;
+        case 2:
+          led_control_data.EFFECT_DELAY = led_control_data.a_speed;
+          led_control_data.LIGHT_SAT = led_control_data.a_bright;
+          break;
+      }
+      break;
+    case 2:
+      led_control_data.EFFECT_DELAY = led_control_data.a_speed;
+      switch (submode) {
+        case 1: led_control_data.RAINBOW_STEP = map(led_control_data.a_bright, 0, 255, 32, 1); break;
+        case 2:
+        case 3: led_control_data.LIGHT_SAT = led_control_data.a_bright; break;
+        case 4:
+        case 5: led_control_data.HUE_EFFECT = RGBtoHue(led_control_data.a_red, led_control_data.a_green, led_control_data.a_blue); break;
+      }
+      break;
+    case 3:
       led_control_data.color = RGBtoHue(led_control_data.a_red, led_control_data.a_green, led_control_data.a_blue);
       led_control_data.LIGHT_SAT = led_control_data.a_bright;
-    }
+      
+      break;
+    case 4:
+      volF.k = map(led_control_data.a_bright, 0, 255, 29, 31);
+
+      if (submode >= 5) {
+        led_control_data.settings[1] = map(led_control_data.a_speed, 0, 255, 20, 1);
+      }
+      break;
   }
 }
 
@@ -156,7 +170,7 @@ void handle_data(String data, String topic) {
     led_control_data.a_blue = sutil::list::get(data, 2, ',');
 
     led_control_data.mode = 1;
-    led_control_data.submode = 4;
+    led_control_data.submode = 1;
 
     return;
   }

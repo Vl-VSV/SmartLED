@@ -10,7 +10,7 @@
 #define AUTO_LOW_PASS 1
 
 // Favourites_modes
-const byte favorites_modes[][2] = {{1, 3}, {2, 2}, {2, 3}, {2, 4}, {2, 5}, {3, 1}, {3, 2}, {3, 3}, {3, 4}};
+const byte favorites_modes[][2] = {{1, 2}, {2, 1}, {2, 2}, {2, 4}, {3, 1}, {3, 3}, {4, 6}, {4, 7}, {4, 8}, {4, 9}};
 
 // Wi-Fi
 const char* ssid = _ssid;

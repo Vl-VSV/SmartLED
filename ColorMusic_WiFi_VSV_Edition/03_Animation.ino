@@ -9,13 +9,13 @@ void animation() {
     // 1.*
     case 1:
       switch (this_submode) {
-        // 1.1
+        // 1.1 (Alice main)
         case 1:
-          if (timer_int(2)) one_color_all(led_control_data.color++, led_control_data.LIGHT_SAT, 255);
-          break;
-        // 1.2 (Alice)
-        case 2:
           one_color_all_rgb(led_control_data.a_red, led_control_data.a_green, led_control_data.a_blue);
+          break;
+        // 1.2
+        case 2:
+          if (timer_int(2)) one_color_all(led_control_data.color++, led_control_data.LIGHT_SAT, 255);
           break;
       }
       break;
@@ -33,6 +33,8 @@ void animation() {
 
     // 3.*
     case 3: running_lights(); break;
+
+    // 4.*
     case 4:
       one_color_all(EMPTY_COLOR, 255, EMPTY_BRIGHT);
       if (timer_int(3, 30)) led_control_data.hue += led_control_data.RAINBOW_STEP;
@@ -41,7 +43,7 @@ void animation() {
         for (int i = 0; i < (Slenght * !j + Slenght * j); i++) {
           int XXX = NUM_LEDS / 2 - 1 - i;
           if (j) XXX = NUM_LEDS / 2 + i;
-
+          
           switch (this_submode) {
             case 1: leds[XXX] = ColorFromPalette(myPal, map(i, 0, NUM_LEDS / 2, 0, 241)); break;
             case 2: leds[XXX] = ColorFromPalette(RainbowStripeColors_p, map(i, 0, NUM_LEDS / 2, 0, 241)); break;
