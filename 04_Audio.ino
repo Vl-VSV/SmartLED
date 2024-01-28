@@ -11,7 +11,6 @@ void autoLowPass() {
   LOW_PASS = thisMax + LOW_PASS_ADD;  // нижний порог как максимум тишины + некая величина
 }
 
-
 void fullLowPass() {
   FastLED.setBrightness(0);
   FastLED.show();
@@ -24,7 +23,6 @@ void fullLowPass() {
 }
 
 //--- Analyze ---------------------------------------------------------------------------------------------------------
-
 #define _volMin 0
 #define _volMax 255
 #define _window 2

@@ -1,4 +1,3 @@
-#ifdef ESP8266
 void setup_wifi() {
   delay(10);
   Serial.println();
@@ -169,4 +168,3 @@ void handle_data(String data, String topic) {
     return;
   }
 }
-#endif
