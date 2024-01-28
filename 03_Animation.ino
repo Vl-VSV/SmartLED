@@ -11,24 +11,11 @@ void animation() {
       switch (this_submode) {
         // 1.1
         case 1:
-          if (led_control_data.WHITE_TEMP > 90) one_color_all(HUE_ORANGE, (led_control_data.WHITE_TEMP - 90) * 2, led_control_data.LIGHT_SAT);
-          else one_color_all(HUE_BLUE, 90 - led_control_data.WHITE_TEMP, led_control_data.LIGHT_SAT);
-          break;
-        // 1.2
-        case 2:
-          one_color_all(led_control_data.LIGHT_COLOR, led_control_data.LIGHT_SAT, 255);
-          break;
-        // 1.3
-        case 3:
           if (timer_int(2)) one_color_all(led_control_data.color++, led_control_data.LIGHT_SAT, 255);
           break;
-        // 1.4 (Alice)
-        case 4:
-#ifdef ESP8266
+        // 1.2 (Alice)
+        case 2:
           one_color_all_rgb(led_control_data.a_red, led_control_data.a_green, led_control_data.a_blue);
-#else
-          one_color_all(255, 255, 255);
-#endif
           break;
       }
       break;
@@ -41,7 +28,6 @@ void animation() {
         case 3: sinelon(); break;
         case 4: Perlin(245, 255, 60, 255, 0, 24, NUM_LEDS, 32); break;
         case 5: Perlin(245, 255, 60, 255, 0, 21, 10, 25); break;
-        case 6: Perlin(30, 255, 140, 255, 150, 21, 10, 25); break;
       }
       break;
 

@@ -2,8 +2,6 @@
 struct LEDControlData {
   byte mode = 1;
   byte submode = 1;
-  // Количество подрежимов для каждого из четырех основных режимов.
-  byte maxSubmode[4] = { 4, 6, 4, 9 };
 
   byte color = 0;
   byte bright = 255;
