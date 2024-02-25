@@ -3,6 +3,7 @@
 #include "settings.h"
 
 // Лента
+#define LED_TYPE WS2812  // Тип ленты
 #define NUM_LEDS 138     // Количество светодиодов
 #define CURRENT_LIMIT 0  // Лимит по току, 0 - нет лимита
 

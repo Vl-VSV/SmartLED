@@ -92,7 +92,7 @@ void update_settings() {
         case 2:
         case 3: led_control_data.a_sat = led_control_data.a_bright; break;
         case 4:
-        case 5: led_control_data.a_hue = RGBtoHue(led_control_data.a_red, led_control_data.a_green, led_control_data.a_blue); break;
+        case 5: led_control_data.a_hue = RGBtoHue(led_control_data.a_red, led_control_data.a_green, led_control_data.a_blue); FastLED.setBrightness(led_control_data.a_bright); break;
       }
       break;
     case 3:

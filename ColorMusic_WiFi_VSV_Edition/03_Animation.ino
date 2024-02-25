@@ -41,6 +41,7 @@ void animation() {
 
       for (int j = 0; j < 2; j++) {
         for (int i = 0; i < (Slenght * !j + Slenght * j); i++) {
+          int XXX;
           if (EFFECT_DIRECTION_FROM_START)
             int XXX = i;
           else {

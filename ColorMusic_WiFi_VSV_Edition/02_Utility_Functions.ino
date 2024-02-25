@@ -8,7 +8,7 @@
 
 // Функция для начальной настройки ленты
 void setupLED() {
-  FastLED.addLeds<WS2813, LED_PIN, LED_COLOR_ORDER>(leds, NUM_LEDS).setCorrection(CORRECTION);
+  FastLED.addLeds<LED_TYPE, LED_PIN, LED_COLOR_ORDER>(leds, NUM_LEDS).setCorrection(CORRECTION);
   if (CURRENT_LIMIT > 0) FastLED.setMaxPowerInVoltsAndMilliamps(5, CURRENT_LIMIT);
   FastLED.setBrightness(255);
 }
