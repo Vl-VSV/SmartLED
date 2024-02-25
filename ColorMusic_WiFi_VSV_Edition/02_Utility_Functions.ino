@@ -70,7 +70,7 @@ void controlPower(String data) {
     digitalWrite(RELAY_IN, LOW);
   }
 #else
-  if (data == "turnOff") {
+  if (data == "turnOn") {
     FastLED.setBrightness(255);
   } else {
     FastLED.setBrightness(0);
