@@ -8,8 +8,8 @@ void one_color_all_rgb(byte red, byte green, byte blue) {
 
 void colorWipe(byte num) {
   FastLED.clear();
-  
-  for(int i = 0; i < num; i++) {
+
+  for (int i = 0; i < num; i++) {
     leds[i] = CRGB::Blue;
     FastLED.show();
   }
@@ -17,27 +17,27 @@ void colorWipe(byte num) {
 
 void new_rainbow_loop() {
   if (timer_int(2)) {
-    led_control_data.color -= 1;
-    fill_rainbow(leds, NUM_LEDS, led_control_data.color, led_control_data.RAINBOW_STEP);
+    led_control_data.a_color -= 1;
+    fill_rainbow(leds, NUM_LEDS, led_control_data.a_color, led_control_data.a_rainbow_step);
   }
 }
 
 void confetti() {
   if (timer_int(2)) {
-    led_control_data.color++;
+    led_control_data.a_color++;
     fadeToBlackBy(leds, NUM_LEDS, 10);
     int pos = random16(NUM_LEDS);
-    leds[pos] += CHSV(led_control_data.color, led_control_data.LIGHT_SAT, 192);
+    leds[pos] += CHSV(led_control_data.a_color, led_control_data.a_sat, 192);
   }
 }
 
 void sinelon() {
   if (timer_int(2)) {
-    led_control_data.color++;
+    led_control_data.a_color++;
   }
   fadeToBlackBy(leds, NUM_LEDS, 20);
   int pos = beatsin16(13, 0, NUM_LEDS - 1);
-  leds[pos] += CHSV(led_control_data.color, led_control_data.LIGHT_SAT, 192);
+  leds[pos] += CHSV(led_control_data.a_color, led_control_data.a_sat, 192);
 }
 
 int counter = 0;
@@ -45,7 +45,7 @@ void Perlin(byte MIN_SAT, byte MAX_SAT, byte MIN_BRIGHT, byte MAX_BRIGHT, byte H
   if (timer_int(2)) {
     for (int i = 0; i < NUM_LEDS; i++) {
       byte getColor = inoise8(i * STEP, counter);
-      leds[i] = CHSV(HUE_START1 + led_control_data.HUE_EFFECT + map(getColor, 0, 255, 0, HUE_GAP),
+      leds[i] = CHSV(HUE_START1 + led_control_data.a_hue + map(getColor, 0, 255, 0, HUE_GAP),
                      map(getColor, 0, 255, MAX_SAT, MIN_SAT),
                      map(getColor, 0, 255, MIN_BRIGHT, MAX_BRIGHT));
     }
@@ -55,7 +55,7 @@ void Perlin(byte MIN_SAT, byte MAX_SAT, byte MIN_BRIGHT, byte MAX_BRIGHT, byte H
 
 void running_lights() {
   if (led_control_data.submode < 3)
-    led_control_data.color++;
+    led_control_data.a_color++;
 
   if (_pulse) {
     _pulse = false;
@@ -64,7 +64,7 @@ void running_lights() {
       if (magnitude(i) == 0) {
         age(i) = 0;
         magnitude(i) = map(volF.fil, 40, 255, 0, 255);
-        baseColor(i) = led_control_data.color;
+        baseColor(i) = led_control_data.a_color;
         break;
       }
     }
@@ -72,7 +72,7 @@ void running_lights() {
 
   one_color_all();
 
-  if (led_control_data.submode == 1 || led_control_data.submode == 3)
+  if ((led_control_data.submode == 1 || led_control_data.submode == 3) && !EFFECT_DIRECTION_FROM_START)
     dance_party(NUM_LEDS / 2 + NUM_LEDS / 8);
   else
     dance_party(NUM_LEDS + NUM_LEDS / 4);
@@ -89,16 +89,16 @@ void dance_party(int MAX_AGE) {
       if (magnitude(i) > 200) pos = age_full;
       else pos = ((127 + (magnitude(i) / 2)) / 255.0) * age_full;
 
-      if (led_control_data.submode == 1 || led_control_data.submode == 3) {
-        leds[NUM_LEDS / 2 + pos] = CHSV(baseColor(i), led_control_data.LIGHT_SAT, map(age_full, 0, MAX_AGE, 255, 0));
-        leds[NUM_LEDS / 2 - pos - 1] = CHSV(baseColor(i), led_control_data.LIGHT_SAT, map(age_full, 0, MAX_AGE, 255, 0));
+      if ((led_control_data.submode == 1 || led_control_data.submode == 3) && !EFFECT_DIRECTION_FROM_START) {
+        leds[NUM_LEDS / 2 + pos] = CHSV(baseColor(i), led_control_data.a_sat, map(age_full, 0, MAX_AGE, 255, 0));
+        leds[NUM_LEDS / 2 - pos - 1] = CHSV(baseColor(i), led_control_data.a_sat, map(age_full, 0, MAX_AGE, 255, 0));
       } else
-        leds[pos] = CHSV(baseColor(i), led_control_data.LIGHT_SAT, map(age_full, 0, MAX_AGE, 255, 0));
+        leds[pos] = CHSV(baseColor(i), led_control_data.a_sat, map(age_full, 0, MAX_AGE, 255, 0));
 
       if (age(i) == 255) rnd(i)++;
       age(i)++;
 
-      if ((age_full + 1 > MAX_AGE) || ((pos + 1 >= NUM_LEDS / 2) && (led_control_data.submode == 1 || led_control_data.submode == 3)) || (pos + 1 >= NUM_LEDS)) {
+      if ((age_full + 1 > MAX_AGE) || ((pos + 1 >= NUM_LEDS / 2) && ((led_control_data.submode == 1 || led_control_data.submode == 3) && !EFFECT_DIRECTION_FROM_START)) || (pos + 1 >= NUM_LEDS)) {
         magnitude(i) = 0;
         rnd(i) = 0;
       }

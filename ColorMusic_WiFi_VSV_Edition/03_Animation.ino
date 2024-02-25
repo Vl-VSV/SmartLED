@@ -15,7 +15,7 @@ void animation() {
           break;
         // 1.2
         case 2:
-          if (timer_int(2)) one_color_all(led_control_data.color++, led_control_data.LIGHT_SAT, 255);
+          if (timer_int(2)) one_color_all(led_control_data.a_color++, led_control_data.a_sat, 255);
           break;
       }
       break;
@@ -37,27 +37,30 @@ void animation() {
     // 4.*
     case 4:
       one_color_all(EMPTY_COLOR, 255, EMPTY_BRIGHT);
-      if (timer_int(3, 30)) led_control_data.hue += led_control_data.RAINBOW_STEP;
+      if (timer_int(3)) led_control_data.a_hue += 1;
 
       for (int j = 0; j < 2; j++) {
         for (int i = 0; i < (Slenght * !j + Slenght * j); i++) {
-          int XXX = NUM_LEDS / 2 - 1 - i;
-          if (j) XXX = NUM_LEDS / 2 + i;
-          
+          if (EFFECT_DIRECTION_FROM_START)
+            int XXX = i;
+          else {
+            int XXX = NUM_LEDS / 2 - 1 - i;
+            if (j) XXX = NUM_LEDS / 2 + i;
+          }
+
           switch (this_submode) {
             case 1: leds[XXX] = ColorFromPalette(myPal, map(i, 0, NUM_LEDS / 2, 0, 241)); break;
             case 2: leds[XXX] = ColorFromPalette(RainbowStripeColors_p, map(i, 0, NUM_LEDS / 2, 0, 241)); break;
             case 3: leds[XXX] = ColorFromPalette(CloudColors_p, map(i, 0, NUM_LEDS / 2, 0, 241)); break;
             case 4: leds[XXX] = ColorFromPalette(PartyColors_p, map(i, 0, NUM_LEDS / 2, 0, 241)); break;
-            case 5: leds[XXX] = ColorFromPalette(OceanColors_p, (map(i, 0, NUM_LEDS / 2, 0, 241)) / 2 - led_control_data.hue); break;
-            case 6: leds[XXX] = ColorFromPalette(RainbowColors_p, (map(i, 0, NUM_LEDS / 2, 0, 241)) / 2 - led_control_data.hue); break;
-            case 7: leds[XXX] = ColorFromPalette(LavaColors_p, (map(i, 0, NUM_LEDS / 2, 0, 241)) / 2 - led_control_data.hue); break;
-            case 8: leds[XXX] = ColorFromPalette(ForestColors_p, (map(i, 0, NUM_LEDS / 2, 0, 241)) / 2 - led_control_data.hue); break;
-            case 9: leds[XXX] = ColorFromPalette(HeatColors_p, (map(i, 0, NUM_LEDS / 2, 0, 241)) / 2 - led_control_data.hue); break;
+            case 5: leds[XXX] = ColorFromPalette(OceanColors_p, (map(i, 0, NUM_LEDS / 2, 0, 241)) / 2 - led_control_data.a_hue); break;
+            case 6: leds[XXX] = ColorFromPalette(RainbowColors_p, (map(i, 0, NUM_LEDS / 2, 0, 241)) / 2 - led_control_data.a_hue); break;
+            case 7: leds[XXX] = ColorFromPalette(LavaColors_p, (map(i, 0, NUM_LEDS / 2, 0, 241)) / 2 - led_control_data.a_hue); break;
+            case 8: leds[XXX] = ColorFromPalette(ForestColors_p, (map(i, 0, NUM_LEDS / 2, 0, 241)) / 2 - led_control_data.a_hue); break;
+            case 9: leds[XXX] = ColorFromPalette(HeatColors_p, (map(i, 0, NUM_LEDS / 2, 0, 241)) / 2 - led_control_data.a_hue); break;
           }
         }
       }
       break;
   }
 }
-//14,15,16,18

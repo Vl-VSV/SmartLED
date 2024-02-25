@@ -80,31 +80,31 @@ void update_settings() {
       switch (submode) {
         case 1: FastLED.setBrightness(led_control_data.a_bright); break;
         case 2:
-          led_control_data.EFFECT_DELAY = led_control_data.a_speed;
-          led_control_data.LIGHT_SAT = led_control_data.a_bright;
+          led_control_data.a_delay = led_control_data.a_speed;
+          led_control_data.a_sat = led_control_data.a_bright;
           break;
       }
       break;
     case 2:
-      led_control_data.EFFECT_DELAY = led_control_data.a_speed;
+      led_control_data.a_delay = led_control_data.a_speed;
       switch (submode) {
-        case 1: led_control_data.RAINBOW_STEP = map(led_control_data.a_bright, 0, 255, 32, 1); break;
+        case 1: led_control_data.a_rainbow_step = map(led_control_data.a_bright, 0, 255, 32, 1); break;
         case 2:
-        case 3: led_control_data.LIGHT_SAT = led_control_data.a_bright; break;
+        case 3: led_control_data.a_sat = led_control_data.a_bright; break;
         case 4:
-        case 5: led_control_data.HUE_EFFECT = RGBtoHue(led_control_data.a_red, led_control_data.a_green, led_control_data.a_blue); break;
+        case 5: led_control_data.a_hue = RGBtoHue(led_control_data.a_red, led_control_data.a_green, led_control_data.a_blue); break;
       }
       break;
     case 3:
-      led_control_data.color = RGBtoHue(led_control_data.a_red, led_control_data.a_green, led_control_data.a_blue);
-      led_control_data.LIGHT_SAT = led_control_data.a_bright;
-      
+      led_control_data.a_color = RGBtoHue(led_control_data.a_red, led_control_data.a_green, led_control_data.a_blue);
+      led_control_data.a_sat = led_control_data.a_bright;
+
       break;
     case 4:
       volF.k = map(led_control_data.a_bright, 0, 255, 29, 31);
 
       if (submode >= 5) {
-        led_control_data.settings[1] = map(led_control_data.a_speed, 0, 255, 20, 1);
+        led_control_data.a_delay = map(led_control_data.a_speed, 0, 255, 1, 30);
       }
       break;
   }
@@ -155,12 +155,7 @@ void handle_data(String data, String topic) {
   }
 
   if (topic.equals(led_topic + "/power")) {
-    if (data == "turnOn") {
-      FastLED.setBrightness(255);
-    } else if (data == "turnOff") {
-      FastLED.setBrightness(0);
-    }
-
+    controlPower(data);
     return;
   }
 

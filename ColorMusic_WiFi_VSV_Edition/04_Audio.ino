@@ -11,6 +11,7 @@ void autoLowPass() {
   LOW_PASS = thisMax + LOW_PASS_ADD;  // нижний порог как максимум тишины + некая величина
 }
 
+// TODO: Edit this effect
 void fullLowPass() {
   FastLED.setBrightness(0);
   FastLED.show();
@@ -19,7 +20,7 @@ void fullLowPass() {
   autoLowPass();
   delay(100);
 
-  FastLED.setBrightness(led_control_data.bright);
+  FastLED.setBrightness(255);
 }
 
 //--- Analyze ---------------------------------------------------------------------------------------------------------
@@ -53,7 +54,7 @@ FFilter volF, ampF;
 
 void sound_level() {
   if (tick(smartIncr(analogRead(SOUND_MIC), -LOW_PASS, 0, 1023)))
-    Slenght = map(volF.fil, 0, 255, 0, NUM_LEDS / 2);
+    Slenght = map(volF.fil, 0, 255, 0, EFFECT_DIRECTION_FROM_START ? NUM_LEDS : NUM_LEDS / 2);
 }
 
 bool tick(int read) {

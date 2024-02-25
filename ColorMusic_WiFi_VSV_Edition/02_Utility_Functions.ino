@@ -1,14 +1,14 @@
 #define CORRECTION 0xFFFFFF  // Корректировка оттенка (что бы белый был БЕЛЫМ). Ниже есть стандартные варианты.
 /*  Типовые значения: TypicalSMD5050      = 0xFFB0F
                       Typical8mmPixel     = 0xFFE08C
-                      TypicalLEDStrip     = 0xFFB0F0 - стоял этот, но на мой взгляд он "синит"
+                      TypicalLEDStrip     = 0xFFB0F0
                       TypicalPixelString  = 0xFFE08C
                       UncorrectedColor    = 0xFFFFFF - этот отменит всякую корректировку (рекомендуется)        
 */
 
 // Функция для начальной настройки ленты
 void setupLED() {
-  FastLED.addLeds<WS2813, LED_PIN, RGB>(leds, NUM_LEDS).setCorrection(CORRECTION);
+  FastLED.addLeds<WS2813, LED_PIN, LED_COLOR_ORDER>(leds, NUM_LEDS).setCorrection(CORRECTION);
   if (CURRENT_LIMIT > 0) FastLED.setMaxPowerInVoltsAndMilliamps(5, CURRENT_LIMIT);
   FastLED.setBrightness(255);
 }
@@ -29,7 +29,7 @@ float smartIncrFloat(float value, float incr_step, float mininmum, float maximum
 
 // Функция проверки времени прошедшего с момента последнего срабатывания таймера.
 // Возвращает true, если прошло больше времени, чем указанная задержка, иначе false.
-bool timer_int(byte timer = 0, int val = led_control_data.EFFECT_DELAY) {
+bool timer_int(byte timer = 0, int val = led_control_data.a_delay) {
   if (milli - timer_arr_int[timer] > val) {
     timer_arr_int[timer] = milli;
     return true;
@@ -60,4 +60,20 @@ byte RGBtoHue(byte red, byte green, byte blue) {
   else if (maximum == g)
     return map((2.0 + (b - r) / (maximum - minimum)) * 60.0, 0, 360, 0, 255);
   return map((4.0 + (r - g) / (maximum - minimum)) * 60.0, 0, 360, 0, 255);
+}
+
+void controlPower(String data) {
+#if USE_RELAY_ENABLED
+  if (data == "turnOn") {
+    digitalWrite(RELAY_IN, HIGH);
+  } else {
+    digitalWrite(RELAY_IN, LOW);
+  }
+#else
+  if (data == "turnOff") {
+    FastLED.setBrightness(255);
+  } else {
+    FastLED.setBrightness(0);
+  }
+#endif
 }
