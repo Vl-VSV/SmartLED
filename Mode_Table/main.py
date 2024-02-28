@@ -1,4 +1,5 @@
 from prettytable import PrettyTable
+from utility_functions import *
 
 modes_table = PrettyTable()
 modes_table.align = "l"
@@ -31,36 +32,11 @@ modes_table.add_row(["4.8", "Шкала громкости - Лес", "+", "Пл
 modes_table.add_row(["4.9", "Шкала громкости - Жара", "+", "Плавность", ""])
 print(modes_table, end="\n")
 
-print("Массив Таймеров:")
-timers_table = PrettyTable()
-timers_table.align = "l"
-
-timers_table.field_names = ["index", "Режим"]
-
-timers_table.add_row(["0", "Main"])
-timers_table.add_row(["1", "Server Requests"])
-timers_table.add_row(["2", "Effect_1_3, Effect_2_1, Effect_2_2"])
-timers_table.add_row(["3", "Effect_4_*"])
-print(timers_table, end="\n")
-
 # Export to csv
-tbl_as_csv = modes_table.get_csv_string().replace('\r', '')
-text_file = open("modes_table.csv", "w")
-text_file.write(tbl_as_csv)
-text_file.close()
+export_to_csv(modes_table)
 
-# Update comment
-file_path = "../ColorMusic_WiFi_VSV_Edition/ColorMusic_WiFi_VSV_Edition.ino"  # Относительный путь к файлу
-with open(file_path, 'r') as file:
-    arduino_code = file.read()
+# Update .ino file
+update_arduino_file(modes_table)
 
-new_comment = f"""Режимы:
-{str(modes_table)}
-*/
-
-"""
-
-updated_code = arduino_code.split("Режимы:")[0] + new_comment
-
-with open(file_path, 'w') as file:
-    file.write(updated_code)
+# Update README.md file
+update_readme_file(modes_table)
