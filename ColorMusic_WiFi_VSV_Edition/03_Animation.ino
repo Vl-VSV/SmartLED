@@ -43,9 +43,9 @@ void animation() {
         for (int i = 0; i < (Slenght * !j + Slenght * j); i++) {
           int XXX;
           if (EFFECT_DIRECTION_FROM_START)
-            int XXX = i;
+            XXX = i;
           else {
-            int XXX = NUM_LEDS / 2 - 1 - i;
+            XXX = NUM_LEDS / 2 - 1 - i;
             if (j) XXX = NUM_LEDS / 2 + i;
           }
 
