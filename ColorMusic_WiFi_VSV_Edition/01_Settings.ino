@@ -15,12 +15,20 @@
 #define EFFECT_DIRECTION_FROM_START 1  // 1 - Эффекты от начала к краю, 0 - От центра к краям
 #define AUTO_START_ENABLED 1 // 1 - Включение реле, как только подается питание на плату || Работает только с реле
 
+#define USE_BUTTONS 1 // 1 - Использование кнопок для управления, 0 - не используются
 
 // ============================== Пины =================================================================================================================
 #define LED_PIN 0     // Пин ленты
 #define SOUND_MIC A0  // Пин микрофона
+
 #if USE_RELAY_ENABLED
 #define RELAY_IN 4    // Пин реле
+#endif
+
+#if USE_BUTTONS
+#define OK_BTN_PIN 12 // Пин кнопки OK
+#define UP_BTN_PIN 13 // Пин кнопки UP
+#define DOWN_BTN_PIN 14 // Пин кнопки DOWN
 #endif
 // =====================================================================================================================================================
 
@@ -56,6 +64,10 @@ CRGB leds[NUM_LEDS];
 #include <PubSubClient.h>
 #include <StringUtils.h>
 
+#if USE_BUTTONS
+#include <GyverButton.h>
+#endif
+
 WiFiClient espClient;
 PubSubClient client(espClient);
 // ------------------------------------------------------------------------------------------------------
@@ -79,6 +91,11 @@ const TProgmemRGBPalette16 myPal PROGMEM = {
 unsigned int milli;
 unsigned int timer_arr_int[4];
 
+#if USE_BUTTONS
+GButton ok_button(OK_BTN_PIN);
+GButton up_button(OK_BTN_PIN);
+GButton down_button(OK_BTN_PIN);
+#endif
 
 byte heat[NUM_LEDS + ((NUM_LEDS / 2) / 3 * 2) + 1];
 #define age(x) (heat[x])

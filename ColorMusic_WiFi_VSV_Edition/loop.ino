@@ -1,6 +1,10 @@
 void loop() {
   milli = millis();
 
+#if USE_BUTTONS
+  buttons_tick();
+#endif
+
   if (!client.connected()) {
     reconnect();
   }

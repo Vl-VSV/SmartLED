@@ -4,7 +4,7 @@ void setup() {
   setupLED();
 
 #if USE_RELAY_ENABLED
-    pinMode(RELAY_IN, OUTPUT);
+  pinMode(RELAY_IN, OUTPUT);
 #endif
 
 #if AUTO_START_ENABLED
@@ -13,6 +13,10 @@ void setup() {
 
 #if AUTO_LOW_PASS
   fullLowPass();
+#endif
+
+#if USE_BUTTONS
+  setupButtons();
 #endif
 
   FastLED.clear();
