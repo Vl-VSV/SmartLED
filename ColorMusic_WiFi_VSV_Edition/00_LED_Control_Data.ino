@@ -3,6 +3,8 @@ struct LEDControlData {
   byte mode = 1;
   byte submode = 1;
 
+  byte submodes_count[5] = { 0, 2, 5, 4, 9 };
+
   // Для хранения цвета режимов работы с Алисой
   byte a_red = 255;
   byte a_green = 255;
