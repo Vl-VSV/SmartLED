@@ -69,17 +69,9 @@ byte RGBtoHue(byte red, byte green, byte blue) {
 }
 
 void controlPower(String data) {
-#if USE_RELAY_ENABLED
-  if (data == "turnOn") {
-    digitalWrite(RELAY_IN, HIGH);
-  } else {
-    digitalWrite(RELAY_IN, LOW);
-  }
-#else
   if (data == "turnOn") {
     FastLED.setBrightness(255);
   } else {
     FastLED.setBrightness(0);
   }
-#endif
 }
