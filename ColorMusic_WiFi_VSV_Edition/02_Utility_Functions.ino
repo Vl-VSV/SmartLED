@@ -13,12 +13,6 @@ void setupLED() {
   FastLED.setBrightness(255);
 }
 
-void setupButtons() {
-  ok_button.setType(HIGH_PULL);
-  up_button.setType(HIGH_PULL);
-  down_button.setType(HIGH_PULL);
-}
-
 // Функция изменяет величину value на шаг incr в пределах minimum .. maximum
 int smartIncr(int value, int incr_step, int mininmum, int maximum) {
   int val_buf = value + incr_step;

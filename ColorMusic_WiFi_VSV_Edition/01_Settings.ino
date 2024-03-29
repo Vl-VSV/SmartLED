@@ -27,7 +27,7 @@
 #endif
 // =====================================================================================================================================================
 
-// Favourites_modes
+// Избранные режимы, используются для управления режимами в Алисе
 const byte favorites_modes[][2] = {{1, 2}, {2, 1}, {2, 2}, {2, 4}, {3, 1}, {3, 3}, {4, 6}, {4, 7}, {4, 8}, {4, 9}};
 
 // Wi-Fi
@@ -53,27 +53,27 @@ uint16_t LOW_PASS = 70;      // Нижний порог шумов режим VU
 // ============================== ДЛЯ РАЗРАБОТЧИКОВ ====================================================================================================
 // ---------------- Библиотеки --------------------------------------------------------------------------
 #include <FastLED.h>
-CRGB leds[NUM_LEDS];
 
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <StringUtils.h>
 
 #if USE_BUTTONS
-#include <GyverButton.h>
+#include <EncButton.h>
 #endif
-
-WiFiClient espClient;
-PubSubClient client(espClient);
 // ------------------------------------------------------------------------------------------------------
 
 // ---------------- Объявление переменных ---------------------------------------------------------------
+CRGB leds[NUM_LEDS];
 LEDControlData led_control_data;
+
+WiFiClient espClient;
+PubSubClient client(espClient);
 
 #define EMPTY_COLOR HUE_PURPLE
 byte EMPTY_BRIGHT = 40;
 
-// Градиент палитра
+// Градиент палитра для режима 4.1
 const TProgmemRGBPalette16 myPal PROGMEM = {
   0x00FF00, 0x00FF00, 0x6fff00, 0x9eff00,
   0xc3ff00, 0xe3ff00, 0xffff00, 0xffe000,
@@ -87,9 +87,9 @@ unsigned int milli;
 unsigned int timer_arr_int[4];
 
 #if USE_BUTTONS
-GButton ok_button(OK_BTN_PIN);
-GButton up_button(OK_BTN_PIN);
-GButton down_button(OK_BTN_PIN);
+Button ok_button(OK_BTN_PIN);
+Button up_button(UP_BTN_PIN);
+Button down_button(DOWN_BTN_PIN);
 #endif
 
 byte heat[NUM_LEDS + ((NUM_LEDS / 2) / 3 * 2) + 1];
@@ -107,13 +107,19 @@ byte Slenght;
 void setupLED();
 int smartIncr(int value, int incr_step, int mininmum, int maximum);
 float smartIncrFloat(float value, float incr_step, float mininmum, float maximum);
+bool timer_int(byte timer, int val);
+bool isNum(String str);
+byte RGBtoHue(byte red, byte green, byte blue);
+void controlPower(String data);
 
 // --- Animation ---------------------------------------------------------------------------------------------------------------------
 void animation();
 
 // --- Audio -----------------------------------------------------------------------------------------------------------------------
-void analyzeAudio();
 void autoLowPass();
+void fullLowPass();
+void sound_level();
+bool tick(int read);
 
 // --- Remote -----------------------------------------------------------------------------------------------------------------------
 void remoteTick();

@@ -7,10 +7,6 @@ void setup() {
   fullLowPass();
 #endif
 
-#if USE_BUTTONS
-  setupButtons();
-#endif
-
   FastLED.clear();
 
   setup_wifi();
