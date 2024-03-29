@@ -6,6 +6,8 @@ void buttons_tick() {
 
   if (ok_button.click()) {
     fullLowPass();
+    EEPROM.put(LOW_PASS_ADDRESS, LOW_PASS);
+    EEPROM.commit();
   }
 
   if (up_button.click()) {

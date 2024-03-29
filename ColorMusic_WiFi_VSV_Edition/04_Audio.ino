@@ -1,5 +1,5 @@
 void autoLowPass() {
-  delay(10); // ждём инициализации АЦП
+  delay(100); // ждём инициализации АЦП
 
   int thisMax = 0;  // максимум
   int thisLevel;
