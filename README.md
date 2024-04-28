@@ -35,30 +35,15 @@ Smart LED представляет собой систему светомузы�
 
 ### Настройки брокера и WiFi
 
-Для настройки брокера и WiFi нужно создать файл `settings.h` в директории `ColorMusic_WiFi_VSV_Edition` с такой
-структурой:
-
-```c++
-// settings.h
-
-#ifndef SETTINGS_H
-#define SETTINGS_H
-
-// Wi-Fi
-const char* _ssid = "ssid";
-const char* _password = "password";
-
-// MQTT
-const char* _mqtt_server = "mqtt_server";
-const int _mqtt_port = mqtt_port;
-const char* _mqtt_user = "mqtt_user";
-const char* _mqtt_password = "mqtt_password";
-
-// Subscribe
-const String _led_topic = "led_topic";
-
-#endif  // SETTINGS_H
-```
+Для настройки брокера и WiFi в директории `ColorMusic_WiFi_VSV_Edition` откройте файл `settings.h`.  В нем нужно изменить:
+* `ssid` - Название Wi-Fi сети
+* `password` - Пароль от Wi-Fi сети
+* `mqtt_server`, `mqtt_port`, `mqtt_user`, `mqtt_password` нужно взять с вкладки **"Брокер"** на [WQTT](https://www.wqtt.ru/)
+    * `mqtt_server` - Адрес
+    * `mqtt_port` - Порт
+    * `mqtt_user` - Пользователь
+    * `mqtt_password` - Пароль
+*  *`led_topic` - это топик, который ведёт ко всем настройкам вашей ленты. Если вы следовали инструкции и скопировали все топики управления, то у вас он должен быть `"/home/room/led"` и изменять его не нужно.*
 
 ### Обязательные настройки
 
